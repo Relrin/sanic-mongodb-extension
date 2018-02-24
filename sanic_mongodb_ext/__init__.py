@@ -4,6 +4,7 @@ __all__ = ['MongoDbExtension', ]
 VERSION = __version__
 
 
+from motor.motor_asyncio import AsyncIOMotorClient
 from sanic_base_ext import BaseExtension
 
 
