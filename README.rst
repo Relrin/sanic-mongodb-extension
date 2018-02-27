@@ -22,7 +22,6 @@ Example
     from umongo import Document, MotorAsyncIOInstance
     from umongo.fields import StringField
 
-    from sanic_mongodb_ext import MongoDbExtension
 
     app = Sanic(__name__)
     # Configuration for MongoDB and uMongo
@@ -34,10 +33,12 @@ Example
     MongoDbExtension(app) # uMongo client is available as `app.mongodb` or `app.extensions['mongodb']`
     instance = app.config["LAZY_UMONGO"]  # For a structured applications the lazy client very useful
 
+
     # Describe the model
     @instance.register
     class Artist(Document):
         name = StringField(required=True, allow_none=False)
+
 
     # And use it later for APIs
     @app.route("/")
