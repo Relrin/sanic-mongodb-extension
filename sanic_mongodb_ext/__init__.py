@@ -1,4 +1,4 @@
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 __all__ = ['MongoDbExtension', ]
 
 VERSION = __version__
@@ -10,9 +10,14 @@ from sanic_base_ext import BaseExtension
 
 class MongoDbExtension(BaseExtension):
     extension_name = app_attribute = 'mongodb'
+    lazy_app_attribute = 'lazy_umongo'
 
     def init_app(self, app, *args, **kwargs):
         super(MongoDbExtension, self).init_app(app, *args, **kwargs)
+
+        lazy_instance = app.config.get('LAZY_UMONGO', None)
+        if lazy_instance is not None:
+            setattr(app, self.lazy_app_attribute, lazy_instance)
 
         @app.listener('before_server_start')
         async def mongodb_configure(app_inner, _loop):
@@ -23,10 +28,9 @@ class MongoDbExtension(BaseExtension):
                 setattr(app, 'extensions', {})
             app.extensions[self.extension_name] = client
 
-            database = app_inner.config['MONGODB_DATABASE']
-            if database:
+            database = app_inner.config.get('MONGODB_DATABASE', None)
+            if lazy_instance and database:
                 motor_database_client = client[database]
-                lazy_instance = app_inner.config['LAZY_UMONGO']
                 lazy_instance.init(motor_database_client)
 
         @app.listener('after_server_stop')
