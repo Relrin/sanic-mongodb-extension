@@ -16,6 +16,7 @@ This package should be installed using pip: ::
 Example
 =======
 .. code-block:: python
+
     #!/usr/bin/env python3
     from sanic import Sanic, response
     from sanic_mongodb_ext import MongoDbExtension
@@ -26,8 +27,8 @@ Example
     app = Sanic(__name__)
     # Configuration for MongoDB and uMongo
     app.config.update({
-        "MONGODB_DATABASE": "app", # Make ensure that the `app` is really exists
-        "MONGODB_URI": "mongodb://user:password@mongodb:27017",
+        "MONGODB_DATABASE": "app", # Make ensure that the `app` database is really exists
+        "MONGODB_URI": "mongodb://root:root@mongodb:27017",
         "LAZY_UMONGO": MotorAsyncIOInstance(),
     })
     # uMongo client is available as `app.mongodb` or `app.extensions['mongodb']`.
@@ -35,10 +36,12 @@ Example
     # and which is a great choice for the structured projects.
     MongoDbExtension(app)
 
+
     # Describe the model
     @app.lazy_umongo.register
     class Artist(Document):
         name = StringField(required=True, allow_none=False)
+
 
     # And use it later for APIs
     @app.route("/")
@@ -46,6 +49,7 @@ Example
         artist = Artist(name="A new rockstar!")
         await artist.commit()
         return response.json(artist.dump())
+
 
     if __name__ == '__main__':
         app.run(host='0.0.0.0', port=8000)
