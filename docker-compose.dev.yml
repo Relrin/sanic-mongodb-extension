@@ -1,0 +1,53 @@
+version: "2"
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: sanic-mongodb-extension
+    environment:
+      - MONGODB_USERNAME=user
+      - MONGODB_PASSWORD=password
+      - MONGODB_HOST=mongodb
+      - MONGODB_DATABASE=app
+    volumes:
+      - ./sanic_mongodb_ext:/app/sanic_mongodb_ext
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+    networks:
+      - app-tier
+    tty: true
+
+  mongodb:
+    image: bitnami/mongodb:3.7
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB_USERNAME=user
+      - MONGODB_PASSWORD=password
+      - MONGODB_DATABASE=app
+      - MONGODB_ROOT_PASSWORD=root
+    networks:
+      - app-tier
+
+  mongodb_ui:
+    image: adicom/admin-mongo:latest
+    ports:
+      - "1234:1234"
+    environment:
+      - CONN_NAME=mongodb_connection
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_HOST=mongodb
+    depends_on:
+      - mongodb
+    networks:
+      - app-tier

@@ -16,29 +16,29 @@ This package should be installed using pip: ::
 Example
 =======
 .. code-block:: python
-
+    #!/usr/bin/env python3
     from sanic import Sanic, response
     from sanic_mongodb_ext import MongoDbExtension
-    from umongo import Document, MotorAsyncIOInstance
+    from umongo import Instance, Document, MotorAsyncIOInstance
     from umongo.fields import StringField
 
 
     app = Sanic(__name__)
     # Configuration for MongoDB and uMongo
     app.config.update({
-        "MONGODB_DATABASE": "example_database",
+        "MONGODB_DATABASE": "app", # Make ensure that the `app` is really exists
         "MONGODB_URI": "mongodb://user:password@mongodb:27017",
         "LAZY_UMONGO": MotorAsyncIOInstance(),
     })
-    MongoDbExtension(app) # uMongo client is available as `app.mongodb` or `app.extensions['mongodb']`
-    instance = app.config["LAZY_UMONGO"]  # For a structured applications the lazy client very useful
-
+    # uMongo client is available as `app.mongodb` or `app.extensions['mongodb']`.
+    # The lazy client will be available as `app.lazy_mongodb` only when the database was specified,
+    # and which is a great choice for the structured projects.
+    MongoDbExtension(app)
 
     # Describe the model
-    @instance.register
+    @app.lazy_umongo.register
     class Artist(Document):
         name = StringField(required=True, allow_none=False)
-
 
     # And use it later for APIs
     @app.route("/")
@@ -46,6 +46,9 @@ Example
         artist = Artist(name="A new rockstar!")
         await artist.commit()
         return response.json(artist.dump())
+
+    if __name__ == '__main__':
+        app.run(host='0.0.0.0', port=8000)
 
 License
 =======
@@ -55,3 +58,9 @@ The sanic-mongodb-extension is published under BSD license. For more details rea
 .. _uMongo: https://github.com/Scille/umongo
 .. _motor_asyncio: https://motor.readthedocs.io/en/stable/
 .. _LICENSE: https://github.com/Relrin/sanic-mongodb-extension/blob/master/LICENSE
+
+Real project examples
+=====================
+- `Auth/Auth Microservice <https://github.com/OpenMatchmaking/microservice-auth/>`_
+- `Game servers pool microservice <https://github.com/OpenMatchmaking/microservice-game-servers-pool/>`_
+- `Player statistics microservice <https://github.com/OpenMatchmaking/microservice-player-statistics/>`_
