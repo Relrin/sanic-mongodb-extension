@@ -65,6 +65,8 @@ The sanic-mongodb-extension is published under BSD license. For more details rea
 
 Real project examples
 =====================
-- `Auth/Auth Microservice <https://github.com/OpenMatchmaking/microservice-auth/>`_
+Open Matchmaking project:  
+
+- `Auth/Auth microservice <https://github.com/OpenMatchmaking/microservice-auth/>`_
 - `Game servers pool microservice <https://github.com/OpenMatchmaking/microservice-game-servers-pool/>`_
 - `Player statistics microservice <https://github.com/OpenMatchmaking/microservice-player-statistics/>`_
