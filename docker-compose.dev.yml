@@ -27,7 +27,7 @@ services:
     tty: true
 
   mongodb:
-    image: bitnami/mongodb:3.7
+    image: bitnami/mongodb:4.1
     ports:
       - "27017:27017"
     environment:
