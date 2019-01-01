@@ -1,4 +1,4 @@
-sanic==0.8.3
+sanic==18.12.0
 sanic-base-extension==0.1.1
 Marshmallow==2.16.3
 
