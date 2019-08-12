@@ -29,6 +29,12 @@ Example
     app.config.update({
         "MONGODB_DATABASE": "app", # Make ensure that the `app` database is really exists
         "MONGODB_URI": "mongodb://root:root@mongodb:27017",
+        # You can also specify custom connection options.
+        # For more details check the official docs: https://api.mongodb.com/python/3.7.0/api/pymongo/mongo_client.html#pymongo.mongo_client.MongoClient
+        "MONGODB_CONNECT_OPTIONS: {
+            "minPoolSize": 10,
+            "maxPoolSize": 50,
+        },
         "LAZY_UMONGO": MotorAsyncIOInstance(),
     })
     # uMongo client is available as `app.mongodb` or `app.extensions['mongodb']`.
