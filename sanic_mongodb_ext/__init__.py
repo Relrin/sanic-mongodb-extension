@@ -21,7 +21,8 @@ class MongoDbExtension(BaseExtension):
 
         @app.listener('before_server_start')
         async def mongodb_configure(app_inner, _loop):
-            client = AsyncIOMotorClient(app_inner.config['MONGODB_URI'])
+            client_options = app_inner.config.get('MONGODB_CONNECT_OPTIONS', {})
+            client = AsyncIOMotorClient(app_inner.config['MONGODB_URI'], **client_options)
             setattr(app_inner, self.app_attribute, client)
 
             if not hasattr(app, 'extensions'):
