@@ -1,8 +1,9 @@
 FROM python:3.7-slim-stretch
 RUN apt-get update && apt-get -y install gcc
 
-COPY requirements.dev.txt /requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip
+COPY requirements.dev.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
 
 COPY ./sanic_mongodb_ext /app/sanic_mongodb_ext
 COPY ./LICENSE /app
