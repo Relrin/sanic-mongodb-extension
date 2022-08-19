@@ -31,7 +31,7 @@ Example
         "MONGODB_URI": "mongodb://root:root@mongodb:27017",
         # You can also specify custom connection options.
         # For more details check the official docs: https://api.mongodb.com/python/3.7.0/api/pymongo/mongo_client.html#pymongo.mongo_client.MongoClient
-        "MONGODB_CONNECT_OPTIONS: {
+        "MONGODB_CONNECT_OPTIONS": {
             "minPoolSize": 10,
             "maxPoolSize": 50,
         },
