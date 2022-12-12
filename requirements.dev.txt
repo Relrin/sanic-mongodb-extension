@@ -1,5 +1,5 @@
 sanic==22.9
-sanic-base-extension @ git+https://github.com/karnzx/sanic-base-extension.git@f8707e1e18289e0da6a2cdcd900953003eb85510
+sanic-base-extension==0.2.0
 Marshmallow==2.18.1
 
 ipython==7.3.0
