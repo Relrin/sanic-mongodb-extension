@@ -1,4 +1,4 @@
-__version__ = '0.5.0'
+__version__ = '0.6.0'
 __all__ = ['MongoDbExtension', ]
 
 VERSION = __version__
@@ -32,7 +32,7 @@ class MongoDbExtension(BaseExtension):
             database = app_inner.config.get('MONGODB_DATABASE', None)
             if lazy_instance and database:
                 motor_database_client = client[database]
-                lazy_instance.init(motor_database_client)
+                lazy_instance.set_db(motor_database_client)
 
         @app.listener('after_server_stop')
         async def mongodb_free_resources(app_inner, _loop):
