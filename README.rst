@@ -20,9 +20,9 @@ Example
     #!/usr/bin/env python3
     from sanic import Sanic, response
     from sanic_mongodb_ext import MongoDbExtension
-    from umongo import Instance, Document, MotorAsyncIOInstance
+    from umongo import Instance, Document
     from umongo.fields import StringField
-
+    from umongo.frameworks import MotorAsyncIOInstance
 
     app = Sanic(__name__)
     # Configuration for MongoDB and uMongo
@@ -37,14 +37,14 @@ Example
         },
         "LAZY_UMONGO": MotorAsyncIOInstance(),
     })
-    # uMongo client is available as `app.mongodb` or `app.extensions['mongodb']`.
-    # The lazy client will be available as `app.lazy_mongodb` only when the database was specified,
+    # uMongo client is available as `app.ctx.mongodb` or `app.ctx.extensions['mongodb']`.
+    # The lazy client will be available as `app.ctx.lazy_mongodb` only when the database was specified,
     # and which is a great choice for the structured projects.
     MongoDbExtension(app)
 
 
     # Describe the model
-    @app.lazy_umongo.register
+    @app.ctx.lazy_umongo.register
     class Artist(Document):
         name = StringField(required=True, allow_none=False)
 
