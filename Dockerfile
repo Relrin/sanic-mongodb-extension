@@ -1,4 +1,4 @@
-FROM python:3.7-slim-stretch
+FROM python:3.11-slim-bullseye
 RUN apt-get update && apt-get -y install gcc
 
 RUN pip install --upgrade pip
