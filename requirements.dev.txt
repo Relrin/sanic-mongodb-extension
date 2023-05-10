@@ -1,6 +1,6 @@
-sanic==22.9
+sanic==23.3.0
 sanic-base-extension==0.2.0
-Marshmallow==2.18.1
+Marshmallow==3.19
 
-ipython==7.3.0
-pudb==2018.1
+ipython==8.13.2
+pudb==2022.1.3

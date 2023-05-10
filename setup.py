@@ -8,8 +8,8 @@ from setuptools import setup
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 requirements = [
     'sanic-base-extension==0.2.0',
-    'motor==2.1.0',
-    'umongo==2.2.0',
+    'motor==3.1.2',
+    'umongo==3.1.0',
 ]
 
 
